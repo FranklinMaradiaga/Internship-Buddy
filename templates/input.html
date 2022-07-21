@@ -2,71 +2,83 @@
 
 {% block head %} 
 
-<title> User Inputs </title>
+<title> User Preferences </title>
 
 {% endblock %}
 
 {% block content %}
 
-{% for item in selected %}
 
-{% if item == "streamingservices" %}
 <form method='POST'>
-    <div>
+    {% for item in selected %}
+
+    {% if item == "genre" %}
+
+    <div class = "genre">
+        <h1> Genres </h1>
+    
+        <input type='radio' value='action' name='genre'> Action
+        <input type='radio' value='adventure' name='genre'> Adventure
+        <input type='radio' value='animation' name='genre'> Animation
+        <input type='radio' value='comedy' name='genre'> Comedy
+        <input type='radio' value='crime' name='genre'> Crime
+        <input type='radio' value='documentary' name='genre'> Documentary
+        <input type='radio' value='drame' name='genre'> Drama
+        <input type='radio' value='family' name='genre'> Family
+        <input type='radio' value='fantasy' name='genre'> Fantasy
+        <input type='radio' value='history' name='genre'> History
+        <input type='radio' value='horror' name='genre'> Horror
+        <input type='radio' value='music' name='genre'> Music
+        <input type='radio' value='mystery' name='genre'> Mystery
+        <input type='radio' value='romance' name='genre'> Romance
+        <input type='radio' value='science ficton' name='genre'> Science Fiction
+        <input type='radio' value='tv movie' name='genre'> TV Movie
+        <input type='radio' value='thriller' name='genre'> Thriller
+        <input type='radio' value='war' name='genre'> War
+        <input type='radio' value='western' name='genre'> Western
+        <input type='radio' value= 'no genre' name='genre'> No Genre
+    </div>
+    {% endif %}
+
+    {% if item == "rating" %}
+    <div class = "murating">
+        <h1> Minimum User Rating </h1>
+
+        <p>User ratings range from 0 to 10. For reference, most popular 
+            movies have an average user rating between 6 and 8</p>
+
+        <input type="number" step=".01" min="0" max="10" name="minimumUserRating">
+    </div>
+    {% endif %}
+
+    {% if item == "streamingservices" %}
+    <div class = "streamingservices">
     <h1> Streaming Services </h1>
-    <input type='checkbox' value='netflix' name='streamingservices'> Netflix
-    <input type='checkbox' value='amazonprimevideo' name='streamingservices'> Amazon Prime Video
-    <input type='checkbox' value='hulu' name='streamingservices'> Hulu
-    <input type='checkbox' value='paramountplus' name='streamingservices'> Paramount Plus
-    <input type='checkbox' value='HBOmax' name='streamingservices'> HBO Max
-    <input type='checkbox' value='peacock' name='streamingservices'> Peacock
-    <input type='checkbox' value='showmax' name='streamingservices'> Showmax
-    <input type='checkbox' value='appletvplus' name='streamingservices'> Apple TV Plus
-    <input type='checkbox' value='crunchyroll' name='streamingservices'> Crunchyroll
-    <input type='checkbox' value='disneyplus' name='streamingservices'> Disney Plus
-    <input type='checkbox' value='HBOgo' name='streamingservices'> HBO Go
-    <input type='checkbox' value='therokuchannel' name='streamingservices'> The Roku Channel
-    <input type='checkbox' value='discoveryplus' name='streamingservices'> Discovery Plus
-    <input type='checkbox' value='showtime' name='streamingservices'> Showtime
-    <input type='checkbox' value='appleitunes' name='streamingservices''> Apple iTunes
-    <input type='checkbox' value='netflixkids' name='streamingservices'> Netflix Kids
-    <input type='checkbox' value='youtubepremium' name='streamingservices'> Youtube Premium
-    <input type='checkbox' value='googleplaymovies' name='streamingservices'> Google Play Movies
+    <input type='checkbox' value='8' name='streamingservices'> Netflix
+    <input type='checkbox' value='9' name='streamingservices'> Amazon Prime Video
+    <input type='checkbox' value='15' name='streamingservices'> Hulu
+    <input type='checkbox' value='531' name='streamingservices'> Paramount Plus
+    <input type='checkbox' value='384' name='streamingservices'> HBO Max
+    <input type='checkbox' value='386' name='streamingservices'> Peacock
+    <input type='checkbox' value='55' name='streamingservices'> Showmax
+    <input type='checkbox' value='350' name='streamingservices'> Apple TV Plus
+    <input type='checkbox' value='283' name='streamingservices'> Crunchyroll
+    <input type='checkbox' value='390' name='streamingservices'> Disney Plus
+    <input type='checkbox' value='31' name='streamingservices'> HBO Go
+    <input type='checkbox' value='207' name='streamingservices'> The Roku Channel
+    <input type='checkbox' value='510' name='streamingservices'> Discovery Plus
+    <input type='checkbox' value='37' name='streamingservices'> Showtime
+    <input type='checkbox' value='2' name='streamingservices''> Apple iTunes
+    <input type='checkbox' value='175' name='streamingservices'> Netflix Kids
+    <input type='checkbox' value='188' name='streamingservices'> Youtube Premium
+    <input type='checkbox' value='3' name='streamingservices'> Google Play Movies
 
     </div>
+
+    {% endif %}
+    {% endfor %}
+
     <input type='submit'>
 </form>
-{% endif %}
 
-{% if item == "genre" %}
-<form method='POST'>
-    <div>
-    <h1> Genres </h1>
-
-    <input type='radio' value='action' name='genre'> Action
-    <input type='radio' value='adventure' name='genre'> Adventure
-    <input type='radio' value='animation' name='genre'> Animation
-    <input type='radio' value='comedy' name='genre'> Comedy
-    <input type='radio' value='crime' name='genre'> Crime
-    <input type='radio' value='documentary' name='genre'> Documentary
-    <input type='radio' value='drame' name='genre'> Drama
-    <input type='radio' value='family' name='genre'> Family
-    <input type='radio' value='fantasy' name='genre'> Fantasy
-    <input type='radio' value='history' name='genre'> History
-    <input type='radio' value='horror' name='genre'> Horror
-    <input type='radio' value='music' name='genre'> Music
-    <input type='radio' value='mystery' name='genre'> Mystery
-    <input type='radio' value='romance' name='genre'> Romance
-    <input type='radio' value='science ficton' name='genre'> Science Fiction
-    <input type='radio' value='tv movie' name='genre'> TV Movie
-    <input type='radio' value='thriller' name='genre'> Thriller
-    <input type='radio' value='war' name='genre'> War
-    <input type='radio' value='western' name='genre'> Western
-    <input type='radio' value= 'no genre' name='genre'> No Genre
-    </div>
-    <input type='submit'>
-</form>
-{% endif %}
-
-{% endfor %}
 {% endblock content %}

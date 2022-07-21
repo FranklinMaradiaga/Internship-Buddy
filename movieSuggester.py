@@ -4,131 +4,17 @@ import pandas as pd
 import sqlalchemy as db
 import os
 
-tmdbKey = os.environ.get('TMDB_KEY')
-omdbKey = os.environ.get('OMDB_KEY')
+# tmdbKey = os.environ.get('TMDB_KEY')
+# omdbKey = os.environ.get('OMDB_KEY')
 
-
-print()
-print("This program recommends a movie based on your preferences!")
-print()
-
-
-def getGenre():
-    url = "https://api.themoviedb.org/3/genre/movie/list?api_key=" \
-          + tmdbKey + "&language=en-US"
-    response = requests.get(url)
-    response = response.json()
-
-    genreList = [genre['name'] for genre in response['genres']]
-    idList = [genre['id'] for genre in response['genres']]
-
-    genreOrNo = input("Would you like to specify a genre for the movie "
-                      "suggestion? (yes or no): ")
-
-    if genreOrNo.lower() == "yes":
-        print("Here are the genres available:")
-        print(genreList)
-
-        userGenre = input("Enter a genre: ").lower().capitalize()
-
-        while userGenre not in genreList:
-            userGenre = input("Invalid input. Enter a genre listed "
-                              "above: ").lower().capitalize()
-
-        return idList[genreList.index(userGenre)]
-
-    elif genreOrNo.lower() == "no":
-        return ""
-    else:
-        print("Invalid input. Type 'yes' or 'no'")
-        return getGenre()
-
-
-def getUserRating():
-    ratingOrNO = input("Would you like to specify a minimum user rating? "
-                       "(yes or no): ")
-
-    if ratingOrNO.lower() == "yes":
-        print("User ratings range from 0 to 10. For reference, most popular "
-              "movies have an average user rating between 6 and 8")
-        userRating = input("Enter a minimum user rating: ")
-        return checkUserRating(userRating)
-    elif ratingOrNO.lower() == "no":
-        return ""
-    else:
-        print("Invalid input. Type 'yes' or 'no'")
-        return getUserRating()
-
-
-def checkUserRating(rating):
-    try:
-        userRating = float(rating)
-        while userRating < 0 or userRating > 10:
-            userRating = float(input("Invalid input. Enter an number between 0"
-                                     " and 10: "))
-        return userRating
-    except ValueError:
-        print("Error: input should be a number.", end=" ")
-        rating = input("Enter a minimum user rating: ")
-        return checkUserRating(rating)
-
-
-def getStreamingServices():
-    streamingServices = ["Netflix", "Amazon Prime Video", "Hulu",
-                         "Paramount Plus", "HBO max", "Peacock", "ShowMax",
-                         "Apple Tv Plus", "Crunchyroll", "Disney Plus",
-                         "HBO Go", "The Roku Channel", "Discovery Plus",
-                         "Showtime", "Apple iTunes", "Netflix Kids",
-                         "Youtube Premium", "Google Play Movies"]
-
-    idList = [8, 9, 15, 531, 384, 386, 55, 350, 283, 390, 31, 207, 510, 37, 2,
-              175, 188, 3]
-
-    serviceOrNo = input("Would you like to specify a streaming service? "
-                        "(yes or no): ")
-
-    if serviceOrNo.lower() == "yes":
-        print("Here are the streaming services available:")
-        print(streamingServices)
-
-        userSS = input(
-            "Enter the streaming services you have (separate them with "
-            "a comma and a space ', '): ").strip().split(", ")
-
-        userSS = [service.lower() for service in userSS]
-        streamingServices = [service.lower() for service in streamingServices]
-
-        validInput = True
-
-        for service in userSS:
-            if service not in streamingServices:
-                validInput = False
-
-        while not validInput:
-            validInput = True
-            userSS = input(
-                "Enter the streaming services you have (separate them "
-                "with a comma and a space ', '): ").strip().split(", ")
-
-            userSS = [service.lower() for service in userSS]
-            for service in userSS:
-                if service not in streamingServices:
-                    validInput = False
-
-        return [idList[streamingServices.index(service)] for service in userSS]
-
-    elif serviceOrNo.lower() == "no":
-        return ""
-
-    else:
-        print("Invalid input. Type 'yes' or 'no'")
-        return getStreamingServices()
+tmdbKey = "37909ab2a58f4d635646887a974c77a1"
+omdbKey = "44a1fd91"
 
 
 def getMovies(genre="", userRating="", streamingServices=""):
     try:
 
-        if streamingServices != "":
+        if streamingServices != []:
             selectedSS = random.choice(streamingServices)
         else:
             selectedSS = ""
@@ -268,4 +154,4 @@ def runProgram():
         runProgram()
 
 
-runProgram()
+# runProgram()
