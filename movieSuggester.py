@@ -2,9 +2,11 @@ import requests
 import random
 import pandas as pd
 import sqlalchemy as db
+import os
 
-tmdbKey = ""
-omdbKey = ""
+tmdbKey = os.environ.get('TMDB_KEY')
+omdbKey = os.environ.get('OMDB_KEY')
+
 
 print()
 print("This program recommends a movie based on your preferences!")
