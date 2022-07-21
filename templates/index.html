@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block head %} 
+
+<title> Movie Buddy </title>
+
+{% endblock %}
+
+{% block content %}
+
+    <h1> MOVIE BUDDY </h1>
+    <h2> Need help finding a movie? </h2>
+    <h2> Movie Buddy's got you covered! </h2>
+
+    <form method="POST" action="/options">
+        {{ form.hidden_tag() }}
+        <br/>
+        {{ form.submit(class="btn btn-secondary") }} 
+        <!-- <input type="submit" value="FIND A MOVIE"> -->
+    </form>
+
+{% endblock content %}

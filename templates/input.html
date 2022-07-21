@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% block head %} 
+
+<title> User Inputs </title>
+
+{% endblock %}
+
+{% block content %}
+
+{% for item in selected %}
+
+{% if item == "streamingservices" %}
+<form method='POST'>
+    <div>
+    <h1> Streaming Services </h1>
+    <input type='radio' value='netflix' name='streamingservices'> Netflix
+    <input type='radio' value='amazonprimevideo' name='streamingservices'> Amazon Prime Video
+    <input type='radio' value='hulu' name='streamingservices'> Hulu
+    <input type='radio' value='paramountplus' name='streamingservices'> Paramount Plus
+    <input type='radio' value='HBOmax' name='streamingservices'> HBO Max
+    <input type='radio' value='peacock' name='streamingservices'> Peacock
+    <input type='radio' value='showmax' name='streamingservices'> Showmax
+    <input type='radio' value='appletvplus' name='streamingservices'> Apple TV Plus
+    <input type='radio' value='crunchyroll' name='streamingservices'> Crunchyroll
+    <input type='radio' value='disneyplus' name='streamingservices'> Disney Plus
+    <input type='radio' value='HBOgo' name='streamingservices'> HBO Go
+    <input type='radio' value='therokuchannel' name='streamingservices'> The Roku Channel
+    <input type='radio' value='discoveryplus' name='streamingservices'> Discovery Plus
+    <input type='radio' value='showtime' name='streamingservices'> Showtime
+    <input type='radio' value='appleitunes' name='streamingservices''> Apple iTunes
+    <input type='radio' value='netflixkids' name='streamingservices'> Netflix Kids
+    <input type='radio' value='youtubepremium' name='streamingservices'> Youtube Premium
+    <input type='radio' value='googleplaymovies' name='streamingservices'> Google Play Movies
+
+    </div>
+    <input type='submit'>
+</form>
+{% endif %}
+
+{% if item == "genre" %}
+<form method='POST'>
+    <div>
+    <h1> Genres </h1>
+
+    <input type='radio' value='action' name='genre'> Action
+    <input type='radio' value='adventure' name='genre'> Adventure
+    <input type='radio' value='animation' name='genre'> Animation
+    <input type='radio' value='comedy' name='genre'> Comedy
+    <input type='radio' value='crime' name='genre'> Crime
+    <input type='radio' value='documentary' name='genre'> Documentary
+    <input type='radio' value='drame' name='genre'> Drama
+    <input type='radio' value='family' name='genre'> Family
+    <input type='radio' value='fantasy' name='genre'> Fantasy
+    <input type='radio' value='history' name='genre'> History
+    <input type='radio' value='horror' name='genre'> Horror
+    <input type='radio' value='music' name='genre'> Music
+    <input type='radio' value='mystery' name='genre'> Mystery
+    <input type='radio' value='romance' name='genre'> Romance
+    <input type='radio' value='science ficton' name='genre'> Science Fiction
+    <input type='radio' value='tv movie' name='genre'> TV Movie
+    <input type='radio' value='thriller' name='genre'> Thriller
+    <input type='radio' value='war' name='genre'> War
+    <input type='radio' value='western' name='genre'> Western
+    <input type='radio' value= 'no genre' name='genre'> No Genre
+    </div>
+    <input type='submit'>
+</form>
+{% endif %}
+
+{% endfor %}
+{% endblock content %}
