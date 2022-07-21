@@ -11,7 +11,7 @@ tmdbKey = "37909ab2a58f4d635646887a974c77a1"
 omdbKey = "44a1fd91"
 
 
-def getMovies(genre="", userRating="", streamingServices=""):
+def getMovies(genre="", userRating="", streamingServices=[]):
     try:
 
         if streamingServices != []:
@@ -49,55 +49,99 @@ def getMovies(genre="", userRating="", streamingServices=""):
 
         return response
     except ValueError:
-        print("No movies found.")
+        print("No movie found.")
         return -1
 
 
-def displayMovie(movie):
-    movieTitle = movie["title"]
-    movieYear = movie["release_date"][:4]
-
+def selectMovie(movies):
     try:
+        if movies == -1:
+            return -1
+        movieNumber = random.randint(0, len(movies["results"]) - 1)
+        selectedMovie = movies["results"][movieNumber]
+
+        movieTitle = selectedMovie["title"]
+        movieYear = selectedMovie["release_date"][:4]
+
+
         url = "http://www.omdbapi.com/?apikey=" + omdbKey + "&t=" + \
               movieTitle.replace(" ", "+") + "&y=" + str(movieYear) + \
-              "&plot=short"
+              "&plot=full"
 
         response = requests.get(url)
         response = response.json()
 
-        title = response["Title"]
-
-        print()
-        print("Here is some information about the movie we selected for you:")
-        print("Title: " + title)
-        print("Year: " + response["Year"])
-        print("Rated: " + response["Rated"])
-        print("Runtime: " + response["Runtime"])
-        print("Genre: " + response["Genre"])
-        print("Director: " + response["Director"])
-        print("Writer: " + response["Writer"])
-        print("Language: " + response["Language"])
-        print("Plot: " + response["Plot"])
-        print("Ratings: ")
-        for rating in response["Ratings"]:
-            print("   Source: " + rating["Source"])
-            print("   Value: " + rating["Value"])
+        
+        return response
+            
     except KeyError:
+        print("No movie found.")
         return -1
+
+def getMovieTitle(movie):
+    if movie == -1:
+        return "No Movie"
+    else:
+        try:
+            return movie["Title"]
+        except:
+            return "No Movie"
+
+
+def getHTML(movie):
+    if movie == -1:
+        return "<h1 class='nomovie'> No Movie Found </h1>" +\
+            "<h5> (try using different inputs) </h5>"
+    else:
+        try:
+            ratingSub = ""
+
+            for rating in movie["Ratings"]:
+            
+                ratingSub += "" + \
+                    "<div class='singleRating'>" + \
+                        "<p class='source'>" + rating["Source"] + "</p>" + \
+                        "<p class='value'>" + rating["Value"] + "</p>" + \
+                    "</div>"
+
+            ratings = "<div class='ratings'>" + ratingSub + "</div>"
+
+            myHTML = "" + \
+                "<div class='topCorner'>" + \
+                    "<h1 class='title'>" + movie["Title"] + "</h1>"  + \
+                    " <h4 class='yrr'>" + movie["Year"] + " · " + movie["Rated"] + " · " + movie["Runtime"] + \
+                "</div>" + \
+                "<div class='moviePoster'><img src='" + movie["Poster"] + "' class='img'> </div>" + \
+                "<div class='movieInfo'>" + \
+                    "<p class='genreStyle>" + movie["Genre"] + "</p>" + \
+                    "<p class='plot'>" + movie["Plot"] + "</p>" + \
+                    "<p class='director'>" + "Director: " + movie["Director"] + "</p>" + \
+                    "<p class='writers'>" + "Writer: " + movie["Writer"] + "</p>" + \
+                    "<p class='actors'>" + "Actors: " + movie["Actors"] + "</p>" + \
+                    "<p class='language'>" + "Language: " + movie["Language"] + "</p>" + \
+                "</div>"
+
+            myHTML = myHTML + ratings
+
+            return myHTML
+        except:
+            return "<h1 class='nomovie'> No Movie Found </h1>" +\
+            "<h5> (try using different inputs) </h5>"
+
 
 
 def createRecommendationsDatabase(movie):
-    movieID = movie["id"]
+    try:
+        movieID = movie["id"]
 
-    url = "https://api.themoviedb.org/3/movie/" + str(movieID) + \
+        url = "https://api.themoviedb.org/3/movie/" + str(movieID) + \
           "/recommendations?api_key=" + tmdbKey + "&language=en-US&page=1"
 
-    response = requests.get(url)
-    response = response.json()
+        response = requests.get(url)
+        response = response.json()
 
-    df = pd.DataFrame.from_dict(response)
+        df = pd.DataFrame.from_dict(response)
 
-    try:
         response = response["results"]
 
         df = pd.DataFrame.from_dict(response)
@@ -116,42 +160,3 @@ def createRecommendationsDatabase(movie):
         print()
         print("We could not find any similar movies.")
 
-
-def runProgram():
-    genre = getGenre()
-    userRating = getUserRating()
-    streamingServices = getStreamingServices()
-
-    endProgram = ""
-
-    while endProgram.lower() != "no":
-        movies = getMovies(genre, userRating, streamingServices)
-        if movies == -1:
-            break
-        movieNumber = random.randint(0, len(movies["results"]) - 1)
-        selectedMovie = movies["results"][movieNumber]
-
-        while displayMovie(selectedMovie) == -1:
-            movies = getMovies(genre, userRating, streamingServices)
-            movieNumber = random.randint(0, len(movies["results"]) - 1)
-            selectedMovie = movies["results"][movieNumber]
-
-        createRecommendationsDatabase(selectedMovie)
-        print()
-
-        endProgram = input("Would you like to search for a new movie? "
-                           "Type 'yes' or 'no'. Type 'new' to enter "
-                           "new inputs: ")
-
-        while (endProgram.lower() != 'yes' and endProgram.lower() != 'no' and
-               endProgram.lower() != 'new'):
-            endProgram = input("Invalid input. Type yes, no, or new: ")
-
-        if endProgram.lower() == 'new':
-            break
-
-    if endProgram.lower() == 'new' or movies == -1:
-        runProgram()
-
-
-# runProgram()

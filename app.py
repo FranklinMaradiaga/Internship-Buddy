@@ -3,7 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
-from movieSuggester import getMovies
+from movieSuggester import getMovies, selectMovie, getMovieTitle, getHTML
 
 # Create a Flask instance
 app = Flask(__name__)
@@ -61,20 +61,28 @@ def input1():
 def selectedMovie():
 
     if genres == "" and minimumUserRating == "" and streamingServices == []:
-        movies = getMovies("", "", [])
-        print("Yes, I am here")
+        movies = getMovies()
+        
     else:
         movies = getMovies(genres, minimumUserRating, streamingServices)
     
-    movieNumber = random.randint(0, len(movies["results"]) - 1)
-    selectedMovie = movies["results"][movieNumber]
-    movieT = selectedMovie["title"]
-    # print("Genres list:", genres)
-    # print("rating list:", minimumUserRating)
-    # print("ss list:", streamingServices)
-    # movieT = "MAybe"
+    selectedMovie = selectMovie(movies)
+    movieTitle = getMovieTitle(selectedMovie)
+    myHTML = getHTML(selectedMovie)
 
-    return render_template('selectedMovie.html', movieTitle=movieT)
+    if movieTitle == "No Movie":
+        if genres == "" and minimumUserRating == "" and streamingServices == []:
+            movies = getMovies()
+        
+        else:
+            movies = getMovies(genres, minimumUserRating, streamingServices)
+        
+        selectedMovie = selectMovie(movies)
+        movieTitle = getMovieTitle(selectedMovie)
+        myHTML = getHTML(selectedMovie)
+
+
+    return render_template('selectedMovie.html', movieTitle=movieTitle, htmlString=myHTML)
 
 if __name__ == '__main__':               # this should always be at the end
     app.run(debug=True, host="0.0.0.0")

@@ -6,9 +6,6 @@
 {% endblock %} 
 {% block content %} 
 
-    <h1> {{ movieTitle }} </h1>
-
-    <p> Hello, world! </p>
-
+    {{ htmlString |safe }}
 
 {% endblock content %}
