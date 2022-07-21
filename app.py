@@ -25,6 +25,7 @@ def home():
     form = ButtonForm()
     return render_template('index.html', form=form)
 
+
 @app.route('/options', methods=['GET', 'POST'])
 def options():
     # return request.method 
@@ -32,50 +33,48 @@ def options():
         global selected
         selected = request.form.getlist('options')
 
-    if len(selected) > 0:
-        return redirect(url_for('input1'))
-    # elif len(selected) == 0:
-    #     return redirect(url_for('selectedMovie'))
-    return render_template('options.html')
+        if len(selected) > 1:
+            return redirect(url_for('input1'))
+        if len(selected) == 1:
+            return redirect(url_for('selectedMovie'))  
 
+    return render_template('options.html')
 
 
 @app.route('/input', methods=['GET', 'POST'])
 def input1():
-    print(selected)
-    
+    print("My selected list:", selected)
+
     global genres, minimumUserRating, streamingServices
 
     if request.method == "POST":
         genres = request.form.get("genre")
         minimumUserRating = request.form.get("minimumUserRating")
         streamingServices = request.form.getlist("streamingservices")
-    
 
-    print(genres)
-    print(minimumUserRating)
-    print(streamingServices)
+        return redirect(url_for('selectedMovie'))
 
     return render_template('input.html', selected=selected)
 
-# @app.route('/discover', methods=['GET', 'POST'])
-# def selectedMovie():
-#     if len(selected) == 0:
-#         movies = getMovies("", "", "")
-#     else:
-#         movies = getMovies(genres, minimumUserRating, streamingServices)
+
+@app.route('/discover', methods=['GET', 'POST'])
+def selectedMovie():
+
+    if genres == "" and minimumUserRating == "" and streamingServices == []:
+        movies = getMovies("", "", [])
+        print("Yes, I am here")
+    else:
+        movies = getMovies(genres, minimumUserRating, streamingServices)
     
-#     movieNumber = random.randint(0, len(movies["results"]) - 1)
-#     selectedMovie = movies["results"][movieNumber]
-#     movieT = selectedMovie["title"]
+    movieNumber = random.randint(0, len(movies["results"]) - 1)
+    selectedMovie = movies["results"][movieNumber]
+    movieT = selectedMovie["title"]
+    # print("Genres list:", genres)
+    # print("rating list:", minimumUserRating)
+    # print("ss list:", streamingServices)
+    # movieT = "MAybe"
 
-
-#     return render_template('selectedMovie.html', movieTitle=movieT)
-
-
-
-
-
+    return render_template('selectedMovie.html', movieTitle=movieT)
 
 if __name__ == '__main__':               # this should always be at the end
     app.run(debug=True, host="0.0.0.0")
