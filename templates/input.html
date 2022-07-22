@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'layout1.html' %}
 
 {% block head %} 
 
@@ -8,7 +8,7 @@
 
 {% block content %}
 
-
+<div class="text-box">
 <form method='POST'>
     {% for item in selected %}
 
@@ -76,8 +76,24 @@
 
     {% endif %}
     {% endfor %}
-
-    <input type='submit'>
+    <h2 class="b"> <button type="submit" class="btn btn-outline-danger"> Submit</button> </h2>
 </form>
+</div>
+    <style>
+        .text-box{
+         width: 90%;
+         color: white;
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         text-align: center;
+
+         .b{
+            margin-top: 15px;
+        }
+    }
+    </style>
+
 
 {% endblock content %}

@@ -1,50 +1,37 @@
-{% extends "layout.html" %}
-
-{% block head %} 
-
-<title> Movie Buddy </title>
-
-{% endblock %}
-
-{% block content %}
-
-    <h1> MOVIE BUDDY </h1>
-    <h2> Need help finding a movie? </h2>
-    <h2> Movie Buddy's got you covered! </h2>
-
-    <form method="POST" action="/options">
-        {{ form.hidden_tag() }}
-        <br/>
-        {{ form.submit(class="btn btn-secondary") }} 
-        <!-- <input type="submit" value="FIND A MOVIE"> -->
-    </form>
-
-{% endblock content %}
-
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Movie Buddy</title>
+    {% block head %} {% endblock %}
    
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/fontawesome.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+{% block style %} 
 
+{% endblock %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='stylesheet.css') }}">
+
 
 </head>
 <body>
     <header>
             <a href="#" class="logo"><i class= 'bx bxs-movie'> </i> </a>
             <!-- <a href="index.html"> <img src="images/image.png" alt="Logo"></a> -->
-            <!-- <div class= "bx bx-menu" id="menu-icon"></div>
+            <div class= "bx bx-menu" id="menu-icon"></div>
             <ul class="navbar">
                 <li> <a href="{{ url_for('home') }}" class="home-active">Home</a></li>
                 <li> <a href="{{ url_for('options') }}">Discover</a></li>
             </ul>
-    </header> --> -->
+    </header>
 
+    {% block content %} {% endblock %}
+
+</body>
+
+{% block script %} {% endblock %}
+
+</html>

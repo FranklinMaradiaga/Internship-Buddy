@@ -1,0 +1,60 @@
+{% extends "layout1.html" %}
+
+{% block head %} 
+<title> 
+    Movie Buddy
+</title> 
+{% endblock %}
+
+
+{% block content %}
+    <!--Homepage-->
+    <section class="home swiper" id="home"> 
+        <div class="swiper-wrapper">
+            <div class="swiper-slide container">
+                 <img src="{{ url_for('static', filename='venom.webp') }}" />
+                <div class="home-text">
+                    <span>Marvel Universe</span>
+                    <h1>Venom: Let There<br> Be Carnage</h1>
+                    <a href="{{ url_for('options') }}" class="btn">Find a movie</a>
+
+                </div>
+            </div>
+            <!--box 2-->
+            <div class="swiper-slide container">
+                <img src="{{ url_for('static', filename='strange.jpeg') }}" />
+                <div class="home-text">
+                    <span>Marvel Universe</span>
+                    <h1>Dr Strange: <br>Multiverse of Madness</h1>
+                    <a href="{{ url_for('options') }}" class="btn">Find a movie</a>
+                </div>
+            </div>
+            <!--box 3-->
+            <div class="swiper-slide container">
+                <img src="{{ url_for('static', filename='spiderman.jpeg') }}" />
+                <div class="home-text">
+                    <span>Marvel Universe</span>
+                    <h1>Spider-Man:  <br> Far From Home </h1>
+                    <a href="{{ url_for('options') }}" class="btn">Find a movie</a>
+                </div>
+            </div>
+          </div>
+          
+          <div class="swiper-pagination"></div>
+    </section>
+    
+    <!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Link to Custome JS -->
+    <script src="main.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+
+ <div class="text-box">
+    <h1>Movie Buddy</h1>
+    <p>Need help finding your favorite movie? Movie Buddy got you covered</p>
+    <a href="" class="hero-btn">Find a Movie</a>
+ </div>   
+    </section>
+
+{% endblock content %}
