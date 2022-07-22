@@ -54,9 +54,11 @@ def getMovies(genre="", userRating="", streamingServices=[]):
 
 
 def selectMovie(movies):
-    try:
-        if movies == -1:
+
+    if movies == -1:
             return -1
+            
+    try:
         movieNumber = random.randint(0, len(movies["results"]) - 1)
         selectedMovie = movies["results"][movieNumber]
 

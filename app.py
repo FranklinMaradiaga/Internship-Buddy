@@ -13,8 +13,9 @@ selected = []
 genres = ""
 minimumUserRating = ""
 streamingServices = []
-
 # Create a Form Class for homepage
+
+
 
 class ButtonForm(FlaskForm):
     submit = SubmitField("Find a movie")
@@ -43,7 +44,7 @@ def options():
 
 @app.route('/input', methods=['GET', 'POST'])
 def input1():
-    print("My selected list:", selected)
+    # print("My selected list:", selected)
 
     global genres, minimumUserRating, streamingServices
 
@@ -51,7 +52,7 @@ def input1():
         genres = request.form.get("genre")
         minimumUserRating = request.form.get("minimumUserRating")
         streamingServices = request.form.getlist("streamingservices")
-
+    
         return redirect(url_for('selectedMovie'))
 
     return render_template('input.html', selected=selected)
@@ -59,28 +60,25 @@ def input1():
 
 @app.route('/discover', methods=['GET', 'POST'])
 def selectedMovie():
+    global genres, minimumUserRating, streamingServices
+    if genres == None:
+        genres = ""
+    if minimumUserRating == None:
+        minimumUserRating = ""
 
     if genres == "" and minimumUserRating == "" and streamingServices == []:
         movies = getMovies()
-        
+        while movies == -1:
+            movies = getMovies()
+
     else:
         movies = getMovies(genres, minimumUserRating, streamingServices)
-    
+        while movies == -1:
+            movies = getMovies(genres, minimumUserRating, streamingServices)
+
     selectedMovie = selectMovie(movies)
     movieTitle = getMovieTitle(selectedMovie)
     myHTML = getHTML(selectedMovie)
-
-    if movieTitle == "No Movie":
-        if genres == "" and minimumUserRating == "" and streamingServices == []:
-            movies = getMovies()
-        
-        else:
-            movies = getMovies(genres, minimumUserRating, streamingServices)
-        
-        selectedMovie = selectMovie(movies)
-        movieTitle = getMovieTitle(selectedMovie)
-        myHTML = getHTML(selectedMovie)
-
 
     return render_template('selectedMovie.html', movieTitle=movieTitle, htmlString=myHTML)
 
