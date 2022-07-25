@@ -7,9 +7,6 @@ import os
 # tmdbKey = os.environ.get('TMDB_KEY')
 # omdbKey = os.environ.get('OMDB_KEY')
 
-tmdbKey = "37909ab2a58f4d635646887a974c77a1"
-omdbKey = "44a1fd91"
-
 
 def getMovies(genre="", userRating="", streamingServices=[]):
     try:
